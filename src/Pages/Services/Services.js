@@ -10,7 +10,7 @@ const Services = () => {
                     <h2 className='text-4xl pt-1'>Services We Provide</h2>
                 </div>
 
-                <div className='service_items grid grid-cols-3 gap-4'>
+                <div className='service_items grid grid-cols-1 lg:grid-cols-3 gap-4'>
                     <div className='w-96 h-72 py-9 px-10 shadow-lg shadow-indigo-500/40 rounded-xl'>
                         <div className='text-primary text-8xl ml-24'>
                             <FaTooth />
@@ -42,7 +42,7 @@ const Services = () => {
                 <div class="hero min-h-screen">
                     <div class="hero-content flex-col lg:flex-row">
                        <div className='flex flex-1'>
-                       <img src={treatment} class="max-w-sm rounded-lg shadow-2xl" />
+                       <img src={treatment} class="max-w-sm rounded-lg shadow-2xl" alt='img'/>
                        </div>
                         <div className='  flex-1'>
                             <h2 class="text-4xl font-bold">Exceptional Dental Care, on Your Terms</h2>

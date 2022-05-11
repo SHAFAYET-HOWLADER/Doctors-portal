@@ -12,7 +12,7 @@ const Navbar = () => {
     </>
     return (
 
-        <section className='bg-primary' >
+        <section className='bg-primary'>
             <div class="navbar container mx-auto">
                 <div class="navbar-start">
                     <div class="dropdown">
@@ -23,9 +23,9 @@ const Navbar = () => {
                             {indexItems}
                         </ul>
                     </div>
-                    <a class="btn btn-ghost normal-case text-2xl">Doctors Portal</a>
+                    <a  class="btn btn-ghost normal-case text-2xl">Doctors Portal</a>
                 </div>
-                <div class="navbar-center hidden lg:flex">
+                <div class="navbar-center className='bg-primary' hidden lg:flex">
                     <ul class="menu menu-horizontal">
                         {indexItems}
                     </ul>

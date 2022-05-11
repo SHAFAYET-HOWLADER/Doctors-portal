@@ -4,7 +4,7 @@ const Footer = () => {
     const today = new Date();
     const year = today.getFullYear();
     return (
-        <section id='footer' style={{
+        <section id='footer' className='py-16' style={{
             background: `url(${footer})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
