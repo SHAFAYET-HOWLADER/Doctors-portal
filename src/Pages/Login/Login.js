@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 const Login = () => {
+    const navigate = useNavigate();
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const [
         signInWithEmailAndPassword,
@@ -13,11 +14,11 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
-    if (googleUser) {
-        console.log(googleUser);
+    if (googleUser || user) {
+        navigate('/home');
     }
     let catchError;
-    if (googleLoading || error) {
+    if (googleError || error) {
         catchError = <small className='text-red-600' >Error: {error?.message || googleLoading?.message}</small>
     }
     if (googleLoading || loading) {

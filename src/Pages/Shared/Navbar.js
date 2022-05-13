@@ -1,15 +1,28 @@
+
+import { signOut } from 'firebase/auth';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import CustomLink from '../../CustomLink/CustomLink';
+import auth from '../../firebase.init';
 
 const Navbar = () => {
+    const logout = () => {
+        signOut(auth);
+    };
+    const [user] = useAuthState(auth);
     const indexItems = <>
         <li className='text-2xl  font-medium'><CustomLink to='/'>Home</CustomLink></li>
         <li className='text-2xl  font-medium'><CustomLink to='/About'>About</CustomLink></li>
         <li className='text-2xl  font-medium'><CustomLink to='/Appointment'>Appointment</CustomLink></li>
         <li className='text-2xl  font-medium'><CustomLink to='/Reviews'>Reviews</CustomLink></li>
         <li className='text-2xl  font-medium'><CustomLink to='/ContactUs'>Contact Us</CustomLink></li>
-        <li className='text-2xl  font-medium'><CustomLink to='/Login'>Login</CustomLink></li>
+        {
+            user ? <button onClick={logout} class="btn btn-sm">SignOut</button> :
+                <li className='text-2xl  font-medium'><CustomLink to='/Login'>Login</CustomLink></li>
+        }
+
     </>
+ 
     return (
 
         <section className='bg-primary'>
@@ -23,7 +36,7 @@ const Navbar = () => {
                             {indexItems}
                         </ul>
                     </div>
-                    <a  className="btn btn-ghost normal-case text-2xl">Doctors Portal</a>
+                    <a className="btn btn-ghost normal-case text-2xl">Doctors Portal</a>
                 </div>
                 <div className="navbar-center className='bg-primary' hidden lg:flex">
                     <ul className="menu menu-horizontal">

@@ -1,24 +1,36 @@
 import React from 'react';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { useUpdateProfile } from 'react-firebase-hooks/auth';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 const SignUp = () => {
+    const navigate = useNavigate();
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
-    if (googleUser) {
-        console.log(googleUser);
+    if (googleUser || user || updateProfile) {
+        navigate('/home');
     }
-    if (googleError) {
-
+    let catchError;
+    if (googleError || error || updateError) {
+        catchError = <small className='text-red-600' >Error: {error?.message || googleLoading?.message || updateError?.message}</small>
     }
-    if (googleLoading) {
+    if (googleLoading || loading || updating) {
         return <Loading />;
     }
-    const onSubmit = (data, event) => {
-        console.log(data)
+    const onSubmit = async (data, event) => {
         event.target.reset();
+        await createUserWithEmailAndPassword(data.email, data.password);
+        await updateProfile({ displayName: data.displayName });
+        alert('Updated profile');
     };
     return (
         <section id='login'>
@@ -62,8 +74,8 @@ const SignUp = () => {
                                     placeholder="Your Email"
                                     class="input input-bordered w-full max-w-xs" />
                                 <label class="label">
-                                    {errors.email?.type === 'required' && <span class="label-text-alt">{errors.email?.message}</span>}
-                                    {errors.email?.type === 'pattern' && <span class="label-text-alt">{errors.email?.message}</span>}
+                                    {errors.email?.type === 'required' && <span class="label-text-alt text-red-400 ">{errors.email.message}</span>}
+                                    {errors.email?.type === 'pattern' && <span class="label-text-alt text-red-400 ">{errors.email.message}</span>}
                                 </label>
                             </div>
                             <div class="form-control w-full max-w-xs">
@@ -84,12 +96,12 @@ const SignUp = () => {
                                     placeholder="Your Password"
                                     class="input input-bordered w-full max-w-xs" />
                                 <label class="label">
-                                    {errors.password?.type === 'required' && <span class="label-text-alt">{errors.password?.message}</span>}
-                                    {errors.password?.type === 'minLength' && <span class="label-text-alt">{errors.password?.message}</span>}
+                                    {errors.password?.type === 'required' && <span class="label-text-alt text-red-400 ">{errors.password.message}</span>}
+                                    {errors.password?.type === 'minLength' && <span class="label-text-alt text-red-400 ">{errors.password.message}</span>}
                                 </label>
                             </div>
                             <p> <Link to='/signUp'>Forgot Password ? </Link> </p>
-                            <br />
+                            {catchError}
                             <input type='submit' value='Sign Up' class="btn w-full" />
                         </form>
                         <p>Already have an account ? <Link className='text-green-500' to='/login'>Please login</Link></p>
