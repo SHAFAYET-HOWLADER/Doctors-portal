@@ -12,9 +12,9 @@ const AppointmentBanner = ({selected, setSelected}) => {
             backgroundPosition: "center"
         }}>
             <div className='container'>
-                <div class="hero min-h-screen">
-                    <div class="hero-content  flex-col lg:flex-row-reverse">
-                        <img src={chair} class="max-w-sm rounded-lg shadow-2xl" alt='calender_img' />
+                <div className="hero min-h-screen">
+                    <div className="hero-content  flex-col lg:flex-row-reverse">
+                        <img src={chair} className="max-w-sm rounded-lg shadow-2xl" alt='calender_img' />
                         <div className='shadow-lg shadow-cyan-500/50 rounded-lg'>
                             <DayPicker
                                 mode="single"

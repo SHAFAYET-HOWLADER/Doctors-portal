@@ -3,10 +3,10 @@ import React from 'react';
 const Review = (props) => {
     const { review, img } = props.review;
     return (
-        <div class="card w-96 bg-base-100 shadow-xl my-10">
-            <div class="card-body">
+        <div className="card w-96 bg-base-100 shadow-xl my-10">
+            <div className="card-body">
                 {review}
-                <div class="flex items-center justify-evenly pt-12">
+                <div className="flex items-center justify-evenly pt-12">
                     <div className=''>
                         <img src={img} alt='img' />
                     </div>

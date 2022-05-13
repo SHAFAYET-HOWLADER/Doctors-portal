@@ -15,9 +15,9 @@ const Contact = () => {
                     <h2 className='text-white text-4xl font-normal pb-10'>Stay connected with us</h2>
                 </div>
                 <form className='flex flex-col justify-center items-center' >
-                    <input type="email" placeholder="Email Address" class="mb-2 w-[450px] h-[48px] input input-bordered input-success  max-w-xs" required />
-                    <input type="text" placeholder="Subjects" class="mb-2 w-[450px] h-[48px] input input-bordered input-success  max-w-xs" />
-                    <textarea type="text" placeholder="Your message" class="w-[450px] mb-9 h-[48px] input input-bordered input-success  max-w-xs" />
+                    <input type="email" placeholder="Email Address" className="mb-2 w-[450px] h-[48px] input input-bordered input-success  max-w-xs" required />
+                    <input type="text" placeholder="Subjects" className="mb-2 w-[450px] h-[48px] input input-bordered input-success  max-w-xs" />
+                    <textarea type="text" placeholder="Your message" className="w-[450px] mb-9 h-[48px] input input-bordered input-success  max-w-xs" />
                     <PrimaryButton>Submit</PrimaryButton>
                 </form>
             </div>
