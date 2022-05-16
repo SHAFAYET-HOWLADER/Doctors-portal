@@ -5,6 +5,7 @@ import { useUpdateProfile } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
+import useToken from '../../Hooks/useToken';
 const SignUp = () => {
     const navigate = useNavigate();
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
@@ -16,8 +17,10 @@ const SignUp = () => {
     ] = useCreateUserWithEmailAndPassword(auth);
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
-    if (googleUser || user || updateProfile) {
-        navigate('/home');
+    const [token] = useToken(googleUser || user)
+
+    if (googleUser || user) {
+        // navigate('/home')
     }
     let catchError;
     if (googleError || error || updateError) {
@@ -28,9 +31,8 @@ const SignUp = () => {
     }
     const onSubmit = async (data, event) => {
         event.target.reset();
-        await createUserWithEmailAndPassword(data.email, data.password);
-        await updateProfile({ displayName: data.displayName });
-        alert('Updated profile');
+        await createUserWithEmailAndPassword(data.email, data.password || '');
+        await updateProfile({ displayName: data.displayName || '' });
     };
     return (
         <section id='login'>
@@ -39,9 +41,9 @@ const SignUp = () => {
                     <div className="card-body">
                         <h3 className="text-center text-2xl font-bold">Sign Up </h3>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <div class="form-control w-full max-w-xs">
-                                <label class="label">
-                                    <span class="label-text">Your Name</span>
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label">
+                                    <span className="label-text">Your Name</span>
                                 </label>
                                 <input type="text"
                                     {...register("name", {
@@ -51,14 +53,14 @@ const SignUp = () => {
                                         },
                                     })}
                                     placeholder="Your Name"
-                                    class="input input-bordered w-full max-w-xs" />
-                                <label class="label">
-                                    {errors.name?.type === 'required' && <span class="label-text-alt">{errors.name?.message}</span>}
+                                    className="input input-bordered w-full max-w-xs" />
+                                <label className="label">
+                                    {errors.name?.type === 'required' && <span className="label-text-alt">{errors.name?.message}</span>}
                                 </label>
                             </div>
-                            <div class="form-control w-full max-w-xs">
-                                <label class="label">
-                                    <span class="label-text">Email</span>
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label">
+                                    <span className="label-text">Email</span>
                                 </label>
                                 <input type="email"
                                     {...register("email", {
@@ -72,15 +74,15 @@ const SignUp = () => {
                                         }
                                     })}
                                     placeholder="Your Email"
-                                    class="input input-bordered w-full max-w-xs" />
-                                <label class="label">
-                                    {errors.email?.type === 'required' && <span class="label-text-alt text-red-400 ">{errors.email.message}</span>}
-                                    {errors.email?.type === 'pattern' && <span class="label-text-alt text-red-400 ">{errors.email.message}</span>}
+                                    className="input input-bordered w-full max-w-xs" />
+                                <label className="label">
+                                    {errors.email?.type === 'required' && <span className="label-text-alt text-red-400 ">{errors.email.message}</span>}
+                                    {errors.email?.type === 'pattern' && <span className="label-text-alt text-red-400 ">{errors.email.message}</span>}
                                 </label>
                             </div>
-                            <div class="form-control w-full max-w-xs">
-                                <label class="label">
-                                    <span class="label-text">Password</span>
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label">
+                                    <span className="label-text">Password</span>
                                 </label>
                                 <input type="password"
                                     {...register("password", {
@@ -94,15 +96,15 @@ const SignUp = () => {
                                         }
                                     })}
                                     placeholder="Your Password"
-                                    class="input input-bordered w-full max-w-xs" />
-                                <label class="label">
-                                    {errors.password?.type === 'required' && <span class="label-text-alt text-red-400 ">{errors.password.message}</span>}
-                                    {errors.password?.type === 'minLength' && <span class="label-text-alt text-red-400 ">{errors.password.message}</span>}
+                                    className="input input-bordered w-full max-w-xs" />
+                                <label className="label">
+                                    {errors.password?.type === 'required' && <span className="label-text-alt text-red-400 ">{errors.password.message}</span>}
+                                    {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-400 ">{errors.password.message}</span>}
                                 </label>
                             </div>
                             <p> <Link to='/signUp'>Forgot Password ? </Link> </p>
                             {catchError}
-                            <input type='submit' value='Sign Up' class="btn w-full" />
+                            <input type='submit' value='Sign Up' className="btn w-full" />
                         </form>
                         <p>Already have an account ? <Link className='text-green-500' to='/login'>Please login</Link></p>
                         <div className="divider">OR</div>
