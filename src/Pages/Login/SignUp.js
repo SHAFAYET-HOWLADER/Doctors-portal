@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 import useToken from '../../Hooks/useToken';
+
 const SignUp = () => {
     const navigate = useNavigate();
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
@@ -16,15 +17,14 @@ const SignUp = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm(); 
     const [token] = useToken(googleUser || user)
-
-    if (googleUser || user) {
-        // navigate('/home')
+    if (token) {
+        navigate('/home')
     }
     let catchError;
     if (googleError || error || updateError) {
-        catchError = <small className='text-red-600' >Error: {error?.message || googleLoading?.message || updateError?.message}</small>
+        catchError = <small className='text-red-600' >Error: {error?.message || googleError?.message || updateError?.message}</small>
     }
     if (googleLoading || loading || updating) {
         return <Loading />;
@@ -33,6 +33,7 @@ const SignUp = () => {
         event.target.reset();
         await createUserWithEmailAndPassword(data.email, data.password || '');
         await updateProfile({ displayName: data.displayName || '' });
+        alert('Updated profile');
     };
     return (
         <section id='login'>

@@ -8,6 +8,7 @@ import auth from '../../firebase.init';
 const Navbar = () => {
     const logout = () => {
         signOut(auth);
+        localStorage.removeItem('accessToken');
     };
     const [user] = useAuthState(auth);
     const indexItems = <>
@@ -42,7 +43,7 @@ const Navbar = () => {
                     </div>
                     <a className="btn btn-ghost normal-case text-2xl">Doctors Portal</a>
                 </div>
-                <div className="navbar-center className='bg-primary' hidden lg:flex">
+                <div className="navbar-center flex justify-end  className='bg-primary' hidden lg:flex">
                     <ul className="menu menu-horizontal">
                         {indexItems}
                     </ul>

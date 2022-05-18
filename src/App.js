@@ -14,6 +14,8 @@ import Navbar from './Pages/Shared/Navbar';
 import RequireAuth from './RequireAuth/RequireAuth';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import MyAppointment from './Pages/Dashboard/MyAppointment';
+import History from './Pages/Dashboard/History';
+import AllUser from './Pages/Dashboard/AllUser';
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
         }>
           <Route index element={<MyAppointment />}></Route>
           <Route path='review' element={<Review />}></Route>
+          <Route path='history' element={<History/>}></Route>
+          <Route path='allUser' element={<AllUser/>}></Route>
         </Route>
         <Route path='/reviews' element={<Review />}></Route>
         <Route path='/signUp' element={<SignUp />}></Route>
